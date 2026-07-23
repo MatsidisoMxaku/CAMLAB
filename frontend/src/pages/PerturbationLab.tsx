@@ -46,7 +46,7 @@ async function solveWithGroq(
   yPrime0: string,
   maxOrder: number
 ): Promise<SolveResult> {
-  const response = await fetch("http://localhost:8000/api/solve", {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/solve`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

@@ -60,7 +60,7 @@ async function solveIndexNotation(
   dimension: string,
   context: string
 ): Promise<IndexResult> {
-  const response = await fetch("http://localhost:8000/api/index-notation", {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/index-notation`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ expression, problemType, dimension, context }),
