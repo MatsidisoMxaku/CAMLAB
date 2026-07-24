@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabaseClient";
 
 const topics = [
   {
@@ -34,21 +35,38 @@ const topics = [
 function Dashboard() {
   const navigate = useNavigate();
 
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/");
+  };
+
   return (
     <div className="min-h-screen bg-background scientific-grid px-margin-desktop py-xl">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-xl">
-          <div className="font-headline-md text-headline-md font-bold text-primary mb-sm">
-            CAMLab
+
+        {/* Header */}
+        <div className="flex items-center justify-between mb-xl">
+          <div>
+            <div className="font-headline-md text-headline-md font-bold text-primary mb-sm">
+              CAMLab
+            </div>
+            <h1 className="font-headline-lg text-headline-lg text-on-surface mb-sm">
+              Choose a topic to explore
+            </h1>
+            <p className="font-body-md text-body-md text-on-surface-variant">
+              Pick an area below to start solving problems with guided steps and explanations.
+            </p>
           </div>
-          <h1 className="font-headline-lg text-headline-lg text-on-surface mb-sm">
-            Choose a topic to explore
-          </h1>
-          <p className="font-body-md text-body-md text-on-surface-variant">
-            Pick an area below to start solving problems with guided steps and explanations.
-          </p>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-sm font-label-md text-label-md text-on-surface-variant hover:text-error border border-outline-variant/30 hover:border-error/40 px-md py-sm rounded-lg transition-all"
+          >
+            <span className="material-symbols-outlined text-[18px]">logout</span>
+            Sign out
+          </button>
         </div>
 
+        {/* Topic cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter">
           {topics.map((topic) => (
             <button
