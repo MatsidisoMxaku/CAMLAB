@@ -8,6 +8,9 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Handle the OAuth callback hash fragment — Supabase puts the
+    // access_token in the URL hash after Google redirect. This call
+    // parses it and establishes the session automatically.
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
       setLoading(false);
@@ -16,6 +19,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, newSession) => {
         setSession(newSession);
+        if (loading) setLoading(false);
       }
     );
 
