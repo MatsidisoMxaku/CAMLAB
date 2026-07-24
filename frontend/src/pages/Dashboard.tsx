@@ -36,9 +36,9 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/");
-  };
+  window.location.href = "/";
+  await supabase.auth.signOut();
+};
 
   return (
     <div className="min-h-screen bg-background scientific-grid px-margin-desktop py-xl">
