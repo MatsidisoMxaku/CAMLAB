@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
@@ -7,6 +8,15 @@ import IndexNotationLab from "./pages/IndexNotationLab";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+  // Ping the backend on app load so Render wakes up before the user
+  // tries to solve anything. Free tier spins down after 15min inactivity.
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/`)
+      .catch(() => {
+        // Silently ignore — this is just a wake-up ping
+      });
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
